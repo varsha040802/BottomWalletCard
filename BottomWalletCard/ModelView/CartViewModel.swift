@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import Combine
 
-class CardViewModel: ObservableObject {
-    @Published var items: [CardItem] = []
+class CartViewModel: ObservableObject {
+    @Published var items: [CartItem] = []
 
     var totalItems: Int {
         items.reduce(0) { $0 + $1.quantity }
@@ -18,16 +19,16 @@ class CardViewModel: ObservableObject {
         items.reduce(0) { $0 + ($1.price * $1.quantity) }
     }
 
-    func addItem(name: String, price: Int) {
-        if let index = items.firstIndex(where: { $0.name == name }) {
+    func addItem(id: Int ,name: String, price: Int) {
+        if let index = items.firstIndex(where: { $0.id == id }) {
             items[index].quantity += 1
         } else {
-            items.append(CardItem(name: name, price: price, quantity: 1))
+            items.append(CartItem(id: id, name: name, price: price, quantity: 1))
         }
     }
 
-    func removeItem(name: String) {
-        if let index = items.firstIndex(where: { $0.name == name }) {
+    func removeItem(id: Int) {
+        if let index = items.firstIndex(where: { $0.id == id }) {
             if items[index].quantity > 1 {
                 items[index].quantity -= 1
             } else {

@@ -8,11 +8,32 @@
 import SwiftUI
 
 struct CartView: View {
+    @EnvironmentObject var cartVM: CartViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                ForEach(cartVM.items) { item in
+                    HStack {
+                        Text(item.name)
+                        Spacer()
+                        Text("\(item.quantity) × ₹\(item.price)")
+                    }
+                }
+
+                HStack {
+                    Text("Total")
+                    Spacer()
+                    Text("₹\(cartVM.totalPrice)")
+                        .bold()
+                }
+            }
+            .navigationTitle("My Cart")
+        }
     }
 }
 
 #Preview {
     CartView()
+        .environmentObject(CartViewModel())
 }

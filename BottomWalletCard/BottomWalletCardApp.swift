@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct BottomWalletCardApp: App {
+    @StateObject private var CartVM = CartViewModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(CartVM)
+                .preferredColorScheme(.light)
         }
     }
 }
